@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: changeme
+    tomcat:
+      max-active: 5
+  mybatis:
+    configuration:
+      map-underscore-to-camel-case: true
+      default-fetch-size: 1000
+      jdbc-type-for-null: 'Null'
+    mapper-locations: /com/kparlar/iett/consumer/repository/*.xml
+  flyway:
+    enabled: true
+    baseline-on-migration: false
+    baseline-version: 1
+    locations: classpath:/db/migration
+    table: bus_schema_history
+    schemas: bus
+    out-of-order: true
+    validate-on-migrate: true
+    user: postgres
+    password: changeme
+    url: jdbc:postgresql://localhost:5432/postgres
+  logging:
+    level:
+      '[com.kparlar.iett.consumer]': DEBUG
+  jackson:
+    default-property-inclusion: NON_NULL
