@@ -1,4 +1,31 @@
+server:
+  port: 8182
+  servlet:
+    context-path: /bus-consumer
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 1000
+    jdbc-type-for-null: 'Null'
+  mapper-locations: /com/kparlar/iett/consumer/repository/*.xml
 spring:
+  profiles:
+    active: local
+  application:
+    name: bus-consumer
+  cloud:
+    function: lineConsumer
+    stream:
+      bindings:
+        lineConsumer-in-0:
+          destination: iett.line
+          content-type: application/json
+          binder: kafka
+      kafka:
+        binder:
+          autoAddPartitions: true
+          brokers:
+            - localhost:9092
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
@@ -6,12 +33,8 @@ spring:
     password: changeme
     tomcat:
       max-active: 5
-  mybatis:
-    configuration:
-      map-underscore-to-camel-case: true
-      default-fetch-size: 1000
-      jdbc-type-for-null: 'Null'
-    mapper-locations: /com/kparlar/iett/consumer/repository/*.xml
+  jpa:
+    show-sql: true
   flyway:
     enabled: true
     baseline-on-migration: false
@@ -24,8 +47,10 @@ spring:
     user: postgres
     password: changeme
     url: jdbc:postgresql://localhost:5432/postgres
-  logging:
-    level:
-      '[com.kparlar.iett.consumer]': DEBUG
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
   jackson:
     default-property-inclusion: NON_NULL
