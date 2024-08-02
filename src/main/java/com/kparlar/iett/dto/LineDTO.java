@@ -1,22 +1,19 @@
 package com.kparlar.iett.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.kparlar.iett.entity.LineEntity;
+import lombok.Builder;
 
-@Data
-@AllArgsConstructor
-public class LineDTO {
-
-    @JsonProperty("SHATKODU")
-    private String code;
-    @JsonProperty("SHATADI")
-    private String name;
-    @JsonProperty("TARIFE")
-    private String recipe;
-    @JsonProperty("HAT_UZUNLUGU")
-    private double length;
-    @JsonProperty("SEFER_SURESI")
-    private double duration;
-
+@Builder(toBuilder = true)
+public record LineDTO( @JsonProperty("SHATKODU") String code, @JsonProperty("SHATADI") String name, @JsonProperty("TARIFE") String recipe,
+                       @JsonProperty("HAT_UZUNLUGU") double length, @JsonProperty("SEFER_SURESI")double duration) {
+    public LineEntity toEntity(){
+        return LineEntity.builder()
+                .code(this.code)
+                .name(this.name)
+                .recipe(this.recipe)
+                .length(this.length)
+                .duration(this.duration)
+                .build();
+    }
 }

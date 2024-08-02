@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kparlar.iett.repository.LineRepository">
+    <update id="upsert" parameterType="com.kparlar.iett.entity.LineEntity">
+        INSERT INTO bus.line as l (code, message_line_id, name, recipe, length, duration, create_date, update)
+        values (#{code}, #{messageLineId}, #{name}, #{recipe}, #{length}, #{duration}, #{createDate}, #{update})
+        ON CONFLICT (code) DO UPDATE
+        SET
+        message_line_id = #{messageLineId},
+        name = #{name},
+        recipe = #{recipe},
+        length = #{length},
+        duration = #{duration},
+        update = #{update}
+        where l.update <![CDATA[ < ]]> #{update}
+    </update>
+    <update id="upsertAll" parameterType="java.util.List" useGeneratedKeys="false">
+        MERGE INTO bus.line a USING (
+        <foreach collection="lineEntities" item="element" index="index" separator="UNION">
+            SELECT
+            #{element.code, jdbcType=VARCHAR} code,
+            #{element.messageLineId, jdbcType=VARCHAR} messageLineId,
+            #{element.name, jdbcType=VARCHAR} name,
+            #{element.recipe, jdbcType=VARCHAR} recipe,
+            #{element.length, jdbcType=NUMERIC} length,
+            #{element.duration, jdbcType=NUMERIC} duration,
+            #{element.createDate, jdbcType=VARCHAR} createDate,
+            #{element.update, jdbcType=VARCHAR} update
+        </foreach>
+        ) b ON (a.code = b.code)
+        WHEN NOT MATCHED THEN
+        INSERT (code, message_line_id, name, recipe, length, duration, create_date, update)
+        VALUES (code, messageLineId, name, recipe, length, duration, to_timestamp(createDate, 'YYYY-MM-DD"T"HH24:MI:SS:MS"Z"'), to_timestamp(update, 'YYYY-MM-DD"T"HH24:MI:SS:MS"Z"'))
+        WHEN MATCHED AND a.update <![CDATA[ < ]]> to_timestamp(b.update, 'YYYY-MM-DD"T"HH24:MI:SS:MS"Z"') THEN
+        UPDATE SET message_line_id = b.messageLineId, name = b.name, recipe = b.recipe, length = b.length, duration = b.duration,
+        create_date = to_timestamp(b.createDate, 'YYYY-MM-DD"T"HH24:MI:SS:MS"Z"'),
+        update = to_timestamp(b.update, 'YYYY-MM-DD"T"HH24:MI:SS:MS"Z"')
+    </update>
+</mapper>
