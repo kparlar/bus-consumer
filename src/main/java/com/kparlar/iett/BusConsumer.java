@@ -1,23 +1,25 @@
-package com.kparlar.iett.consumer;
+package com.kparlar.iett;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kparlar.iett.consumer.entity.MessageLineEntity;
-import com.kparlar.iett.consumer.repository.MessageLineRepository;
+import com.kparlar.iett.entity.MessageLineEntity;
+import com.kparlar.iett.entity.enums.MesssageLineStatus;
+import com.kparlar.iett.repository.MessageLineRepository;
 import lombok.Builder;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Date;
-import java.util.List;
 import java.util.function.Consumer;
 
 @Slf4j
 @SpringBootApplication
+@ComponentScan(basePackages = "com.kparlar.iett")
 public class BusConsumer {
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -47,9 +49,11 @@ public class BusConsumer {
 		return messageDTO -> {
 			messageDTO.id();
 			Date date = new Date();
-			var messageLineEntity =  MessageLineEntity.builder().messageLineId(messageDTO.id).message(messageDTO.message).update(date).status("PROCESSED").build();
 			try{
+				JsonNode jsonNode = objectMapper.readTree(messageDTO.message());
+				var messageLineEntity =  MessageLineEntity.builder().messageLineId(messageDTO.id).message(jsonNode).update(date).status(MesssageLineStatus.CONSUMED.getValue()).build();
 				messageLineRepository.upsert(messageLineEntity);
+				log.info("Consumed: {}",messageDTO.id());
 			}catch (Exception ex){
 				log.error("Exception: ", ex);
 			}

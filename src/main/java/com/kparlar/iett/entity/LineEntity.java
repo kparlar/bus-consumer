@@ -1,4 +1,4 @@
-package com.kparlar.iett.consumer.entity;
+package com.kparlar.iett.entity;
 
 import lombok.Builder;
 

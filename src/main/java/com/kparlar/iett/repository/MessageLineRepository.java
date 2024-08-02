@@ -1,6 +1,6 @@
-package com.kparlar.iett.consumer.repository;
+package com.kparlar.iett.repository;
 
-import com.kparlar.iett.consumer.entity.MessageLineEntity;
+import com.kparlar.iett.entity.MessageLineEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
