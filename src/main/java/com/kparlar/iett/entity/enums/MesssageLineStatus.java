@@ -1,16 +1,17 @@
-package com.kparlar.iett.consumer.entity.enums;
+package com.kparlar.iett.entity.enums;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Arrays;
 
 
 public enum MesssageLineStatus {
-  PRODUCED("PRODUCER"),
+  PRODUCED("PRODUCED"),
   CONSUMED("CONSUMED"),
   ERROR_PRODuCED("ERROR_PRODUCED"),
   ERROR_CONSUMED("ERROR_CONSUMED");
 
+  @Getter
   private final String value;
 
   MesssageLineStatus(String value){ this.value = value;}
