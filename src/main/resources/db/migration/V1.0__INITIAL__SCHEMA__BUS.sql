@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS bus;
+
 CREATE TABLE bus.message_line (
 	message_line_id varchar(36) NOT NULL,
 	message jsonb NOT NULL,
@@ -8,11 +10,13 @@ CREATE TABLE bus.message_line (
 );
 
 CREATE TABLE bus.line (
-	line_id varchar(36) NOT NULL,
+	code varchar(36) NOT NULL,
+	message_line_id varchar(36) NOT NULL,
 	"name" varchar(100) NOT NULL,
 	recipe varchar(100) NOT NULL,
 	length decimal NOT NULL,
 	duration decimal NOT NULL,
-	"update" timestamp with time zone NOT NULL,
-	CONSTRAINT line_pk PRIMARY KEY (line_id)
+	create_date timestamp with time zone NULL,
+	"update" timestamp with time zone NULL,
+	CONSTRAINT line_pk PRIMARY KEY (code)
 );
