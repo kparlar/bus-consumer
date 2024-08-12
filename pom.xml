@@ -118,6 +118,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>bus-consumer</finalName>
 	</build>
 
 </project>

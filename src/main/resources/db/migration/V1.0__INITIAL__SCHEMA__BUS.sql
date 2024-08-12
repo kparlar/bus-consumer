@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS bus;
+
 CREATE TABLE bus.message_line (
 	message_line_id varchar(36) NOT NULL,
 	message jsonb NOT NULL,
