@@ -1,15 +1,20 @@
 version: 0.2
 phases:
   install:
+    commands:
+      - echo Nothing to do in the install phase
     runtime-versions:
       java: corretto17
+  pre_build:
+  commands:
+    - echo Nothing to do in the pre_build phase
   build:
     commands:
       - echo Packaging JAR file...
-      - mvn clean package
+      - mvn package
   post_build:
     commands:
-      - echo Build complete.
+      - echo Build complete on 'date'
 artifacts:
   files:
     - target/bus-consumer.jar
