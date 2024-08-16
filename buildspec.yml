@@ -8,7 +8,6 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
-      - java -version
   build:
     commands:
       - echo Packaging JAR file...
