@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
-      - pip install mvn
+      - pip install maven
       - echo Mvn installed
   build:
     commands:
