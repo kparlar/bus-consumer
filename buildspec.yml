@@ -4,15 +4,14 @@ phases:
     commands:
       - echo Nothing to do in the install phase
     runtime-versions:
-      java: corretto17
+      java: openjdk8
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
-      - pip install maven
-      - echo Mvn installed
   build:
     commands:
       - echo Packaging JAR file...
+      - mvn -v
       - mvn package
   post_build:
     commands:
