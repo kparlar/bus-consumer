@@ -11,10 +11,10 @@ phases:
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
+      - java -version
   build:
     commands:
       - echo Packaging JAR file...
-      - mvn -v
       - mvn package
   post_build:
     commands:
