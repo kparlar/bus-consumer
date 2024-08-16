@@ -3,9 +3,9 @@ phases:
   install:
     commands:
       - echo Nothing to do in the install phase
-      - wget http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
-      - tar xzvf apache-maven-3.5.2-bin.tar.gz -C /opt/
-      - export PATH=/opt/apache-maven-3.5.2/bin:$PATH
+      - wget https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz
+      - tar xzvf apache-maven-3.9.8-bin.tar.gz -C /opt/
+      - export PATH=/opt/apache-maven-3.9.8/bin:$PATH
     runtime-versions:
       java: corretto17
   pre_build:
