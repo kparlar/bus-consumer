@@ -3,6 +3,7 @@ phases:
   install:
     commands:
       - echo Nothing to do in the install phase
+      - sudo yum install maven
     runtime-versions:
       java: openjdk8
   pre_build:
