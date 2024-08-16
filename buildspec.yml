@@ -6,8 +6,8 @@ phases:
     runtime-versions:
       java: corretto17
   pre_build:
-  commands:
-    - echo Nothing to do in the pre_build phase
+    commands:
+      - echo Nothing to do in the pre_build phase
   build:
     commands:
       - echo Packaging JAR file...
