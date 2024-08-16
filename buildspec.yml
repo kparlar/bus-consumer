@@ -3,9 +3,11 @@ phases:
   install:
     commands:
       - echo Nothing to do in the install phase
-      - pip install maven
+      - wget http://www-eu.apache.org/dist/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
+      - tar xzvf apache-maven-3.5.2-bin.tar.gz -C /opt/
+      - export PATH=/opt/apache-maven-3.5.2/bin:$PATH
     runtime-versions:
-      java: openjdk8
+      java: corretto17
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
