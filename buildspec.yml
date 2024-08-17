@@ -2,7 +2,8 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Nothing to do in the install phase
+      - apt-get update -y
+      - apt-get install -y maven
     runtime-versions:
       java: corretto17
   pre_build:
