@@ -2,11 +2,12 @@ version: 0.2
 phases:
   install:
     commands:
-      - apt-get update -y
-      - apt-get install -y maven
+      - echo Nothing to do in the install phase
+      #- apt-get update -y
+      #- apt-get install -y maven
       #- apt-get install openjdk-17-jdk
     runtime-versions:
-      java: corretto17
+      java: corretto21
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase
